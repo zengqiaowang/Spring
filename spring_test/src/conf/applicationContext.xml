@@ -22,7 +22,7 @@
 	    </property>
 	    <property name="driverUrl">
 	    	<!-- 北京服务器   -->  
-	        <value>jdbc:oracle:thin:ssh2/ssh2@114.113.228.188:1521:orcl</value>
+	        <value>jdbc:oracle:thin:spring/spring@114.113.228.188:1521:orcl</value>
 	    </property>
 	    <property name="user"> 
 	        <value>spring</value> 
@@ -36,10 +36,29 @@
 	
 	</bean>	
 
-	<!-- 设置需要进行Spring注解扫描的类包 -->
-	<context:component-scan base-package="com.cybbj" />
+	<!-- 设置需要进行Spring注解扫描的dao类包 -->
+	<context:component-scan base-package="com.cybbj.dao" />
+	<!-- 设置需要进行Spring注解扫描的service类包 -->
+	<context:component-scan base-package="com.cybbj.service" />
 	<!-- 定义Jdbc模板bean -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" 
 		p:dataSource-ref="dataSource"></bean>
-	
+		
+	<!-- 配置事务管理器 -->	
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		p:dataSource-ref="dataSource"></bean>	
+		
+	<!-- 通过AOP配置提供事务增强，让service包下所有bean的所有方法拥有事务
+		 com.cybbj.service..*(..) service或service以下子包的任何类-->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="serviceMethod"			
+			expression="execution(* com.cybbj.service..*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
+	</aop:config>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
 </beans>

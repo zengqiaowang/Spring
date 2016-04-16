@@ -33,7 +33,7 @@ public class UserDao {
 	 *
 	 * @param userName  用户名
 	 * @param passWord  密码
-	 * @return 
+	 * @return 1/0
 	 * @throws
 	 */
 	public int getMatchCount(String userName,String passWord) throws Exception {
@@ -49,7 +49,7 @@ public class UserDao {
 	 * findUserByUserName: 根据用户名查找用户对象
 	 *
 	 * @param userName 用户名
-	 * @return
+	 * @return User对象
 	 * @throws Exception 
 	 */
 	public User findUserByUserName(final String userName) throws Exception {
@@ -69,9 +69,16 @@ public class UserDao {
 		return user;
 	}
 	
-	public void updateLoginInfo(User user) {
+	/**
+	 * 
+	 * updateLoginInfo: 更新登录信息
+	 *
+	 * @param user  用户对象
+	 * @throws Exception 
+	 */
+	public void updateLoginInfo(User user) throws Exception{
 		StringBuffer sql = new StringBuffer();
-		sql.append(" update t_user set last_vist=?,last_ip,credits=? ")
+		sql.append(" update t_user set last_visit=?,last_ip=?,credits=? ")
 			.append(" where user_id=?");
 		jdbcTemplate.update(sql.toString(), new Object[]{
 			user.getLastVisit(),user.getLastIp(),user.getCredits(),user.getUserId()

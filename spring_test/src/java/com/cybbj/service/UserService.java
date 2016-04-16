@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.cybbj.dao.LoginLogDao;
 import com.cybbj.dao.UserDao;
+import com.cybbj.domain.LoginLog;
 import com.cybbj.domain.User;
+import com.cybbj.util.DateUtil;
 
 /** 
  * UserService: 用户业务类
@@ -63,4 +65,25 @@ public class UserService {
 		}
 		return user;
 	}
+	
+	/**
+	 * 
+	 * loginSuccess: 登录成功操作
+	 *
+	 * @param user 用户对象
+	 */
+	public void loginSuccess(User user) {
+		user.setCredits(5+user.getCredits());
+		LoginLog loginLog = new LoginLog();
+		loginLog.setUserId(user.getUserId());
+		loginLog.setLoginDateTime(DateUtil.getFormatDateStr());
+		loginLog.setIp(user.getLastIp());
+		try {
+			userDao.updateLoginInfo(user);
+			loginLogDao.insertLoginLog(loginLog);
+		} catch (Exception e) {
+			log.error(e);
+		}
+	}
+	
 }

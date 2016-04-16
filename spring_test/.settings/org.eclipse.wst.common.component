@@ -4,6 +4,7 @@
         <wb-resource deploy-path="/" source-path="/WebRoot"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/conf"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test"/>
         <property name="context-root" value="/spring_test"/>
         <property name="java-output-path" value="/spring_test/WebRoot/WEB-INF/classes"/>
     </wb-module>

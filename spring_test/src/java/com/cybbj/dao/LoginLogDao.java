@@ -33,9 +33,9 @@ public class LoginLogDao {
 	public void insertLoginLog(LoginLog loginLog) throws Exception {
 		StringBuffer sql = new StringBuffer();
 		sql.append("insert into t_login_log(LOGIN_LOG_ID,USER_ID,IP,LOGIN_DATETIME) ")
-			.append("values(?,?,?,?)");
+			.append("values(T_LOGIN_LOG_SEQ.nextval,?,?,?)");
 		jdbcTemplate.update(sql.toString(), new Object[]{
-			loginLog.getLoginLogId(),loginLog.getUserId(),loginLog.getIp(),loginLog.getLoginDateTime()
+			loginLog.getUserId(),loginLog.getIp(),loginLog.getLoginDateTime()
 		});
 	}
 }
