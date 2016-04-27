@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 1、默认命名空间;  2、xsi标准命名空间,用于指定自定义命名空间的schema文件;	3、自定义命名空间,aop是自定义命名空间的简称;	-->
+<beans xmlns="http://www.springframework.org/schema/beans"		
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/jee
+    http://www.springframework.org/schema/jee/spring-jee-3.0.xsd" default-autowire="byName"
+    default-lazy-init="true">
+  
+     
+    <!-- bean对象引用 -->
+    <bean id="boss" name="boss" class="com.cybbj.resourcce.bean.Boss">
+		<property name="car.brand" value="法拉利"></property>
+    </bean>
+  
+</beans>
