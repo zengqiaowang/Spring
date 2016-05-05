@@ -10,6 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 /**
  * Boss: TODO请填写类描述
  * 
@@ -17,9 +24,12 @@ import java.util.Properties;
  * @author 15989
  * @modified 2016-4-25 v1.0 15989 新建
  */
+@Component(value="boss")
 public class Boss {
 
-	private Car car = new Car();
+	@Autowired
+	@Qualifier(value="car")
+	private Car car;
 
 	private String cellPhoneBrand;
 
@@ -29,6 +39,9 @@ public class Boss {
 
 	private Properties properties = new Properties();
 
+	public Boss() {
+		System.out.println(">>>boss constructor");
+	}
 	//用于测试方法替换
 	public Car getCar() {
 		return car;
@@ -68,6 +81,16 @@ public class Boss {
 
 	public void setProperties(Properties properties) {
 		this.properties = properties;
+	}
+	
+	@PostConstruct
+	public void initMethod() {
+		System.out.println(">>>初始化方法,注解为@PostConstruct");
+	}
+	
+	@PreDestroy
+	public void finishDestroy() {
+		System.out.println(">>>执行销毁方法,注解为@PreDestroy");
 	}
 
 }

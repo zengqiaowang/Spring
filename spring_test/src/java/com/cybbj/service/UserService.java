@@ -7,6 +7,7 @@ package com.cybbj.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cybbj.dao.LoginLogDao;
@@ -22,13 +23,15 @@ import com.cybbj.util.DateUtil;
  * @author 15989
  * @modified 2016-4-14 v1.0 15989 新建 
  */
-@Service	//将UserService标注为一个服务层的bean
+@Service("userService")	//将UserService标注为一个服务层的bean
 public class UserService {
 	private Log log = LogFactory.getLog(UserService.class);
 	
 	@Autowired
+	@Qualifier("userDao")
 	private UserDao userDao;
 	@Autowired
+	@Qualifier("loginLogDao")
 	private LoginLogDao loginLogDao;
 	
 	/**

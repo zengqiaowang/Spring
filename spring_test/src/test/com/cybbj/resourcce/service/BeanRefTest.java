@@ -121,4 +121,16 @@ public class BeanRefTest {
 		car2.introduce();
 		car3.introduce();
 	}
+	
+	//注解
+	@Test
+	public void testAnnotation() {
+		//启动容器
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
+		Boss boss = (Boss)applicationContext.getBean("boss");
+		Car car = boss.getCar();
+		System.out.println(car);
+		//关闭容器
+		((ClassPathXmlApplicationContext)applicationContext).destroy();
+	}
 }

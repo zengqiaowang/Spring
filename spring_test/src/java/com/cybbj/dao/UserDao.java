@@ -21,7 +21,7 @@ import com.cybbj.domain.User;
  * @author 15989
  * @modified 2016-4-14 v1.0 15989 新建 
  */
-@Repository    //通过Spring注解定义一个DAO
+@Repository("userDao")    //通过Spring注解定义一个DAO
 public class UserDao {
 	
 	@Autowired   //自动注入JdbcTemplate的bean

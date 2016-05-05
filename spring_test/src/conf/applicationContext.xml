@@ -15,31 +15,49 @@
     http://www.springframework.org/schema/jee/spring-jee-3.0.xsd" default-autowire="byName"
     default-lazy-init="true">
     
+    <!-- 引入数据源配置属性文件 方式1-->
+    <bean id="jdbcConfig" name="jdbcConfig" class="com.cybbj.service.EncryptPropertyPlaceholderConfigurer"
+    	p:location="classpath:jdbc.properties" p:fileEncoding="utf-8"></bean>
+    	
+    <!-- 引入数据源配置属性文件 方式2-->
+    <!-- 
+    <context:property-placeholder location="classpath:jdbc.properties" file-encoding="utf-8"/>
+     -->
+    
    	<!-- 配置数据源 -->
     <bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
 	    <property name="driver">
-	        <value>oracle.jdbc.driver.OracleDriver</value>
+	        <value>${driver}</value>
 	    </property>
 	    <property name="driverUrl">
 	    	<!-- 北京服务器   -->  
-	        <value>jdbc:oracle:thin:spring/spring@114.113.228.188:1521:orcl</value>
+	        <value>${driverUrl}</value>
 	    </property>
 	    <property name="user"> 
-	        <value>spring</value> 
+	        <value>${user}</value> 
 	    </property>
 	    <property name="password"> 
-	        <value>spring</value>
+	        <value>${password}</value>
 	    </property>
 	    <property name="alias">
 	        <value>Oracle</value>
 	    </property>
 	
 	</bean>	
-
+	<!-- 系统配置 -->
+	<bean id="sysConfig" name="sysConfig" class="com.cybbj.util.SysConfig"
+		init-method="initFromDB" p:dataSource-ref="dataSource"/>
+	<!-- 应用管理 -->
+	<bean id="applicationManager" name="applicationManager" class="com.cybbj.service.ApplicationManager"
+		p:maxTabPageNum="#{sysConfig.maxTabPageNum}"
+		p:sessionTimeout="#{sysConfig.sessionTimeout}"/>
+	
 	<!-- 设置需要进行Spring注解扫描的dao类包 -->
 	<context:component-scan base-package="com.cybbj.dao" />
-	<!-- 设置需要进行Spring注解扫描的service类包 -->
-	<context:component-scan base-package="com.cybbj.service" />
+	<!-- 设置需要进行Spring注解扫描的service类包 use-default-filters="false"不使用默认的扫描方式 -->
+	<context:component-scan base-package="com.cybbj.service" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
 	<!-- 定义Jdbc模板bean -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" 
 		p:dataSource-ref="dataSource"></bean>

@@ -6,6 +6,9 @@ package com.cybbj.resourcce.bean;
 
 import java.io.Serializable;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 
 /**
  * Car: TODO请填写类描述
@@ -14,6 +17,8 @@ import java.io.Serializable;
  * @author 15989
  * @modified 2016-4-21 v1.0 15989 新建
  */
+@Component(value="car")
+@Scope(value="prototype")
 public class Car implements Serializable{
 	/** 
 	 * serialVersionUID : TODO请填写变量描述
@@ -28,7 +33,7 @@ public class Car implements Serializable{
 
 	// 默认构造函数
 	public Car() {
-
+		System.out.println(">>>car constructor");
 	}
 
 	// 带参数的构造函数

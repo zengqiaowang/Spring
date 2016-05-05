@@ -117,9 +117,67 @@
      -->
 	
 	<!-- 继承 -->
+	<!-- 
 	<bean id="abstractCar" name="abstractCar" class="com.cybbj.resourcce.bean.Car" abstract="true"
 		p:brand="宝马" p:color="白色" p:maxSpeed="350"/>
 	<bean id="car2" p:brand="红旗" name="car2" parent="abstractCar"></bean>
 	<bean id="car3" p:brand="法拉利" name="car3" parent="abstractCar"></bean>
-
+	 -->
+	
+	<!-- 测试注解 -->
+	<!-- 
+	<context:component-scan base-package="com.cybbj.resourcce"></context:component-scan>
+	 -->
+	
+	<!-- ApplicationContext测试 -->
+	<!-- 
+	<bean class="com.cybbj.applicationContext.MailSendListener"></bean>
+	<bean id="mailSender" class="com.cybbj.applicationContext.MailSender"></bean>
+	 -->
+	
+	<!-- Proxy配置 前置与后置通知 -->
+	<!-- p:proxyInterfaces指定代理的接口,多个接口使用<list>元素 -->
+	<!-- p:interceptorNames 指定使用的增强-->
+	<!-- p:target-ref指定增强的类 -->
+	<!-- 可使用 p:interceptorNames="beforeAdvice,afterAdvice"替换  -->
+	<!-- 
+	<bean id="beforeAdvice" name="beforeAdvice" class="com.cybbj.aop.GreetingBeforeAdvice"></bean>
+	<bean id="afterAdvice" name="afterAdvice" class="com.cybbj.aop.GreetingAfterAdvice"></bean>
+	<bean id="target" name="target" class="com.cybbj.aop.NaiveWaiter"></bean>
+	<bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+		p:proxyInterfaces="com.cybbj.aop.Waiter"	
+		p:target-ref="target"
+	>		
+		<property name="interceptorNames">
+			<list>
+				<idref local="beforeAdvice"/>
+				<idref local="afterAdvice"/>
+			</list>
+		</property>
+	</bean>
+	 -->
+	
+	<!-- AOP alliance 环绕通知 -->
+	<!-- 
+	<bean id="greetingInterceptor" name="greetingInterceptor" class="com.cybbj.aop.GreetingInterceptor"></bean>
+	<bean id="target" name="target" class="com.cybbj.aop.NaiveWaiter"></bean>
+	<bean id="waiter" name="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+		p:proxyInterfaces="com.cybbj.aop.Waiter"
+		p:target-ref="target"
+		p:interceptorNames="greetingInterceptor"
+	></bean>
+	 -->
+	
+	<!-- 异常通知 -->
+	<bean id="transactionManager" name="transactionManager" class="com.cybbj.aop.TransactionManager"></bean>
+	<bean id="target" name="target" class="com.cybbj.aop.ForumService"></bean>
+	<bean id="forumService" name="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
+		p:interceptorNames="transactionManager"
+		p:target-ref="target"
+		p:proxyTargetClass="true"
+	></bean>
+	
+	
+	
+	
 </beans>
