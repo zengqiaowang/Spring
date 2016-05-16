@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /** 
- * TestAdvice: TODO请填写类描述
+ * TestAdvice: 测试类
  * 
  * @version 1.0
  * @author 15989
@@ -45,10 +45,33 @@ public class TestAdvice {
 		ForumService forumService = (ForumService)applicationContext.getBean("forumService");
 		//forumService.removeForum();
 		try {
-			forumService.updateForum();
+			//forumService.updateForum();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testIntroductionInterceptor() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
+		ForumService forumService = (ForumService)applicationContext.getBean("forumService");
+		forumService.removeForum(10);
+		forumService.updateForum(20);
+		
+		Monitorable monitorable = (Monitorable)forumService;
+		monitorable.setMonitorActive(true);
+		forumService.removeForum(30);
+		forumService.updateForum(40);
+	}
+	
+	@Test
+	public void testPoinCut() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
+		com.cybbj.aop.staticpointcut.Waiter waiter = (com.cybbj.aop.staticpointcut.Waiter)applicationContext.getBean("waiter");
+		//Seller seller = (Seller)applicationContext.getBean("seller");
+		waiter.greetTo("张三");
+		waiter.serverTo("张三");
+		//seller.greetTo("李四");
 	}
 }

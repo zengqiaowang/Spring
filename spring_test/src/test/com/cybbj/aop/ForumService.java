@@ -15,12 +15,22 @@ import java.sql.SQLException;
  */
 public class ForumService {
 	
-	public void removeForum() {
+	/*************** 异常通知处理 ********************/
+/*	public void removeForum() {
 		//do sth
 		throw new RuntimeException("运行异常。");
 	}
 	
 	public void updateForum() throws Exception {
 		throw new SQLException("数据更新操作异常");
+	}*/
+	
+	/************** 引介通知 ***********************/
+	public void removeForum(int forumID) {
+		System.out.println("即将移除论坛编号为" + forumID + "记录") ;
+	}
+	
+	public void updateForum(int forumID) {
+		System.out.println("即将更新论坛编号为" + forumID + "记录");
 	}
 }

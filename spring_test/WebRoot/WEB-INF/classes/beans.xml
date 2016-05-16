@@ -169,6 +169,7 @@
 	 -->
 	
 	<!-- 异常通知 -->
+	<!--  
 	<bean id="transactionManager" name="transactionManager" class="com.cybbj.aop.TransactionManager"></bean>
 	<bean id="target" name="target" class="com.cybbj.aop.ForumService"></bean>
 	<bean id="forumService" name="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
@@ -176,7 +177,121 @@
 		p:target-ref="target"
 		p:proxyTargetClass="true"
 	></bean>
+	-->
 	
+	<!-- 引介增强 -->
+	<!-- 
+	<bean id="target" name="target" class="com.cybbj.aop.ForumService"></bean>
+	<bean id="controllablePerformanceMoniter" name="controllablePerformanceMoniter" class="com.cybbj.aop.ControllablePerformanceMoniter"></bean>
+	<bean id="forumService" name="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
+		p:interfaces="com.cybbj.aop.Monitorable"
+		p:interceptorNames="controllablePerformanceMoniter"
+		p:target-ref="target"
+		p:proxyTargetClass="true"
+	></bean>
+	 -->
+	
+	<!-- 静态切面引入增强 -->
+	<!-- 
+	<bean id="waiterTarget" name="waiterTarget" class="com.cybbj.aop.pointcut.Waiter"></bean>
+	<bean id="sellerTarget" name="sellerTarget" class="com.cybbj.aop.pointcut.Seller"></bean>
+	<bean id="greetingBeforeAdvice" name="greetingBeforeAdvice" class="com.cybbj.aop.pointcut.GreetingBeforeAdvice"></bean>
+	<bean id="greetingAdvisor" name="greetingAdvisor" class="com.cybbj.aop.pointcut.GreetingAdvisor"
+		p:advice-ref="greetingBeforeAdvice"
+	></bean>
+	<bean id="parent" name="parent" abstract="true" class="org.springframework.aop.framework.ProxyFactoryBean"
+		p:interceptorNames="greetingAdvisor"
+		p:proxyTargetClass="true"
+	></bean>
+	<bean id="waiter" name="waiter" parent="parent" p:target-ref="waiterTarget"></bean>
+	<bean id="seller" name="seller" parent="parent" p:target-ref="sellerTarget"></bean>
+	 -->
+	
+	<!-- 正则表达式定义静态切面 -->
+	<!-- 
+	<bean id="waiterTarget" name="waiterTarget" class="com.cybbj.aop.staticpointcut.Waiter"></bean>
+	<bean id="sellerTarget" name="sellerTarget" class="com.cybbj.aop.staticpointcut.Seller"></bean>
+	<bean id="greetingBeforeAdvice" name="greetingBeforeAdvice" class="com.cybbj.aop.staticpointcut.GreetingBeforeAdvice"></bean>
+	<bean id="regexpAdvisor" name="regexpAdvisor"
+		class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"
+		p:patterns=".*greet.*"
+		p:advice-ref="greetingBeforeAdvice"
+	></bean>
+	<bean id="waiter" name="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+		p:interceptorNames="regexpAdvisor"
+		p:target-ref="waiterTarget"
+		p:proxyTargetClass="true"
+	></bean>
+	 -->
+	
+	<!-- 动态切面配置 -->
+	<!-- p:proxyTargetClass="true"指定是否对类进行代理 -->
+	<!-- 
+	<bean id="waiterTarget" name="waiterTarget" class="com.cybbj.aop.staticpointcut.Waiter"></bean>
+	<bean id="dynamicAdvisor" name="dynamicAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="pointcut">
+			<bean class="com.cybbj.aop.dynamicpointcut.GreetingDynamicMatcherPointcut"></bean>
+		</property>
+		<property name="advice">
+			<bean class="com.cybbj.aop.GreetingBeforeAdvice"></bean>
+		</property>
+	</bean>
+	<bean id="waiter" name="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+		p:interceptorNames="dynamicAdvisor"
+		p:target-ref="waiterTarget"
+		p:proxyTargetClass="true"
+	></bean>
+ 	-->	
+ 	
+ 	<!-- 配置控制流程切面 -->
+ 	<!-- constructor-arg type="java.lang.Class"指定流程切点的类 -->
+ 	<!-- constructor-arg type="java.lang.String"指定流程切点的方法 -->
+ 	<!-- 
+ 	<bean id="greetingAdvice" name="greetingAdvice" class="com.cybbj.aop.staticpointcut.GreetingBeforeAdvice"></bean>
+ 	<bean id="waiterTarget" name="waiterTarget" class="com.cybbj.aop.staticpointcut.Waiter"></bean>
+ 	<bean id="controlFlowPointcut" name="controlFlowPointcut" class="org.springframework.aop.support.ControlFlowPointcut">
+ 		<constructor-arg type="java.lang.Class" value="com.cybbj.aop.flowpointcut.WaiterDelegate"></constructor-arg>
+ 		<constructor-arg type="java.lang.String" value="service"></constructor-arg>
+ 	</bean>
+ 	<bean id="controlFlowAdvisor" name="controlFlowAdvisor"
+ 		class="org.springframework.aop.support.DefaultPointcutAdvisor"
+ 		p:pointcut-ref="controlFlowPointcut"
+ 		p:advice-ref="greetingAdvice"
+ 	></bean>
+ 	<bean id="waiter" name="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+ 		p:interceptorNames="controlFlowAdvisor"
+ 		p:proxyTargetClass="true"
+ 		p:target-ref="waiterTarget"
+ 	
+ 	></bean>
+ 	 -->
+ 	
+ 	<!-- BeanNameAutoProxyCreator创建代理 -->
+ 	<!-- 
+ 	<bean id="waiter" name="waiter" class="com.cybbj.aop.staticpointcut.Waiter"></bean>
+ 	<bean id="seller" name="seller" class="com.cybbj.aop.staticpointcut.Seller"></bean>
+ 	<bean id="greetingAdvice" name="greetingAdvice" class="com.cybbj.aop.staticpointcut.GreetingBeforeAdvice"></bean>
+ 	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"
+ 		p:beanNames="*er"
+ 		p:interceptorNames="greetingAdvice"
+ 		p:optimize="true"
+ 	
+ 	></bean>
+ 	 -->
+ 	
+ 	<!-- DefaultAdvisorAutoProxyCreator创建代理 -->
+ 	<bean id="waiter" name="waiter" class="com.cybbj.aop.staticpointcut.Waiter"></bean>
+ 	<bean id="seller" name="seller" class="com.cybbj.aop.staticpointcut.Seller"></bean>
+ 	<bean id="greetingAdvice" name="greetingAdvice" class="com.cybbj.aop.staticpointcut.GreetingBeforeAdvice"></bean>
+ 	<bean id="regexpAdvisor" name="regexpAdvisor"
+ 		class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"
+ 		p:advice-ref="greetingAdvice"
+ 		p:pattern=".*greet.*"
+ 	></bean>
+ 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
+ 	
+ 	
+ 	
 	
 	
 	
