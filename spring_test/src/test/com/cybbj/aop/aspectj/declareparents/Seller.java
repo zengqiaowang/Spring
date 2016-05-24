@@ -13,4 +13,5 @@ package com.cybbj.aop.aspectj.declareparents;
  */
 public interface Seller {
 	public void sell(String goods);
+	public int sellNum();
 }

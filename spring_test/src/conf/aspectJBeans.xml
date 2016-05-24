@@ -44,11 +44,26 @@
      -->
     
     <!-- AspectJ @annotation -->
+    <!-- 
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
     <bean id="naiveWaiter" name="naiveWaiter" class="com.cybbj.aop.aspectj.declareparents.NaiveWaiter"></bean>
     <bean id="naughtyWaiter" name="naughtyWaiter" class="com.cybbj.aop.aspectj.declareparents.NaughtyWaiter"></bean>
     <bean class="com.cybbj.aop.aspectj.declareparents.TestAspect"></bean>
+     -->
     
+    <!-- AspectJ advance -->
+    <!-- 
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+    <bean id="naiveWaiter" name="naiveWaiter" class="com.cybbj.aop.aspectj.declareparents.NaiveWaiter"></bean>
+    <bean id="naughtyWaiter" name="naughtyWaiter" class="com.cybbj.aop.aspectj.declareparents.NaughtyWaiter"></bean>
+    <bean class="com.cybbj.aop.aspectj.advance.TestAspect"></bean>
+     -->
+    
+    <!-- AspectJ advance (bind return value)  -->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+    <bean id="naiveWaiter" name="naiveWaiter" class="com.cybbj.aop.aspectj.declareparents.NaiveWaiter"></bean>
+    <bean id="smartSeller" name="smartSeller" class="com.cybbj.aop.aspectj.declareparents.SmartSeller"></bean>
+    <bean class="com.cybbj.aop.aspectj.advance.TestAspect"></bean>
     
     
     

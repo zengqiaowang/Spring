@@ -130,7 +130,7 @@
 	<!-- Root logger 所有logger的基类，没有定义的logger将会使用root logger -->
 	<!-- ===================================================================== -->
 	<root>
-		<level value="INFO" />
+		<level value="DEBUG" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="other-log" />		
 	</root>

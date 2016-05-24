@@ -7,9 +7,12 @@ package com.cybbj.aop.aspectj.advance;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+
+import com.cybbj.aop.aspectj.declareparents.Waiter;
 
 /** 
  * TestAspect: TODO请填写类描述
@@ -73,6 +76,49 @@ public class TestAspect {
 		System.out.println("-------joinPointAccess--------");
 	}
 	
+	/**
+	 * 
+	 * bindJoinPointParams: 绑定连接点方法入参
+	 *
+	 * @param clientName 
+	 */
+	@Before("target(com.cybbj.aop.aspectj.declareparents.NaiveWaiter) && args(clientName)")
+	public void bindJoinPointParams(String clientName) {
+		System.out.println("--bindJoinPointParams(String clientName)--");
+		System.out.println("clientName: " + clientName);
+		System.out.println("--bindJoinPointParams(String clientName)--");
+	}
+	
+	/**
+	 * 
+	 * bindProxyObj: 绑定代理对象
+	 *
+	 * @param waiter 
+	 */
+	@Before("this(waiter)")
+	public void bindProxyObj(Waiter waiter) {
+		System.out.println(">>>调用bindProxyObj(Waiter waiter)方法");
+	}
+	
+	/**
+	 * 
+	 * bindProxyRetVal: 绑定返回值
+	 *
+	 * @param retVal 拦截的返回值
+	 */
+	@AfterReturning(value="target(com.cybbj.aop.aspectj.declareparents.SmartSeller)",returning="retVal")
+	public void bindProxyRetVal(int retVal) {
+		System.out.println("调用bindProxyRetVal(int retVal)方法");
+		System.out.println("retVal：" + retVal);
+		System.out.println("调用bindProxyRetVal(int retVal)方法结束");
+	}
+	
+	@AfterThrowing(value="target(com.cybbj.aop.aspectj.declareparents.SmartSeller)",throwing="ae")
+	public void bindException(ArithmeticException ae) {
+		System.out.println("---bindException()---");
+		System.out.println("exception:" + ae.getMessage());
+		System.out.println("---bindException()---");
+	}
 	
 	
 }

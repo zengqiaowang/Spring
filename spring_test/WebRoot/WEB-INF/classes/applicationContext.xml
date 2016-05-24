@@ -25,13 +25,13 @@
      -->
     
    	<!-- 配置数据源 -->
-    <bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
-	    <property name="driver">
-	        <value>${driver}</value>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">  
+	    <property name="driverClass">
+	        <value>${driverClass}</value>
 	    </property>
-	    <property name="driverUrl">
+	    <property name="jdbcUrl">
 	    	<!-- 北京服务器   -->  
-	        <value>${driverUrl}</value>
+	        <value>${jdbcUrl}</value>
 	    </property>
 	    <property name="user"> 
 	        <value>${user}</value> 
@@ -39,10 +39,6 @@
 	    <property name="password"> 
 	        <value>${password}</value>
 	    </property>
-	    <property name="alias">
-	        <value>Oracle</value>
-	    </property>
-	
 	</bean>	
 	<!-- 系统配置 -->
 	<bean id="sysConfig" name="sysConfig" class="com.cybbj.util.SysConfig"

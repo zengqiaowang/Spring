@@ -22,5 +22,10 @@ public class SmartSeller implements Seller {
 		System.out.println(">>>sell：" + goods);
 
 	}
+	
+	public int sellNum() {
+		System.out.println(">>>销售数量100");
+		return 100;
+	}
 
 }

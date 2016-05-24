@@ -19,7 +19,7 @@ public class DESUtilTest {
 	@Test
 	public void testGetEncryptString() {
 		DESUtil oDesUtil = new DESUtil();
-		System.out.println(oDesUtil.getEncryptString("123"));
+		System.out.println(oDesUtil.getEncryptString("spring"));
 	}
 	
 	@Test
