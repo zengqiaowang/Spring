@@ -4,6 +4,9 @@
  */
 package com.cybbj.transaction.togethernest;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,4 +26,41 @@ public class TestUserService {
 		UserService userService = (UserService)applicationContext.getBean("userService");
 		userService.logon("admin");
 	}
+	
+	@Test
+	public void getKeyIdTest() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("transaction.xml");
+		UserService userService = (UserService)applicationContext.getBean("userService");
+		System.out.println(userService.getKeyId());
+	}
+	
+	@Test
+	public void batchInsertTest() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("transaction.xml");
+		UserService userService = (UserService)applicationContext.getBean("userService");
+		userService.batchInsert();
+	}
+	
+	@Test
+	public void queryMapTest() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("transaction.xml");
+		UserService userService = (UserService)applicationContext.getBean("userService");
+		userService.queryForRowCallbackHandler();
+	}
+	
+	@Test
+	public void queryForRowMapperTest() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("transaction.xml");
+		UserService userService = (UserService)applicationContext.getBean("userService");
+		List<Map<String, String>> oList = userService.queryForRowMapper();
+		System.out.println(oList.size());
+	}
+	
+	@Test
+	public void RowCountCallbackHandlerTest() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("transaction.xml");
+		UserService userService = (UserService)applicationContext.getBean("userService");
+		System.out.println(userService.RowCountCallbackHandler());
+	}
+	
 }

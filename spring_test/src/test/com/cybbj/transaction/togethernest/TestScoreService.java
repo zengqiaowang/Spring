@@ -21,6 +21,7 @@ public class TestScoreService {
 	public void addScoreTest() {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("transaction.xml");
 		ScoreService scoreService = (ScoreService)applicationContext.getBean("scoreService");
-		scoreService.addScore("admin", 10);
+		//scoreService.addScore("admin", 10);
+		scoreService.addScore2();
 	}
 }

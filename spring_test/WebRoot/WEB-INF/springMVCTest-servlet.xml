@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+	http://www.springframework.org/schema/jee
+	http://www.springframework.org/schema/jee/spring-jee-3.0.xsd" default-autowire="byName"
+    default-lazy-init="true">
+    
+    <!-- 扫描 com.cybbj.springmvc包下的所有类，让标注spring注解的类生效-->
+    <context:component-scan base-package="com.cybbj.springmvc"></context:component-scan>
+	<!-- 定义视图名称解析器  将为 /WEB-INF/jsp/springmvctest/<view>.jsp的视图对象-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/jsp/springmvctest/"
+		p:suffix=".jsp"
+	></bean>
+	
+	<!-- HttpMessageConvert转换配置 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"
+    	p:messageConverters-ref="messageConverters"
+    ></bean>
+    
+    <!-- HttpMessageConverter列表 -->
+    <util:list id="messageConverters">
+    	<bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter"></bean>
+    	<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"></bean>
+    	<bean class="org.springframework.http.converter.ResourceHttpMessageConverter"></bean>
+    	<bean class="org.springframework.http.converter.StringHttpMessageConverter"></bean>
+    	<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
+    	<bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter"
+    		p:marshaller-ref="xmlMarshaller"
+    		p:unmarshaller-ref="xmlMarshaller"
+    	></bean>
+    </util:list>
+    
+    <!-- 声明Mershaller,使用XStream技术 -->
+    <!-- 使用STAX对XML消息进行处理，STAX占用内存少，速度也很快 -->
+    <!-- 我们将使用XStream的注解定义XML转换规则，使用到XStream注解的类在此声明 -->
+    <bean id="xmlMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+    	<property name="streamDriver">
+    		<bean class="com.thoughtworks.xstream.io.xml.StaxDriver"></bean>
+    	</property>
+    	<property name="annotatedClasses">
+    		<list>
+    			<value>com.cybbj.springmvc.pojo.User</value>
+    		</list>
+    	</property>
+    </bean>
+    
+    
+</beans>

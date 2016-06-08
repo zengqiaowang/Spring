@@ -4,8 +4,12 @@
  */
 package com.cybbj.transaction.togethernest;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Service;
 
 /** 
@@ -26,4 +30,16 @@ public class ScoreService extends BaseService {
 		sqlBuffer.append("update t_user u set u.score=u.score+? where u.user_name=?");
 		jdbcTemplate.update(sqlBuffer.toString(), toAdd,userName);
 	}
+	
+	public void addScore2() {
+		String sql = " insert into t_user(user_id,user_name,credits) values(T_USER_SEQ.nextval,?,?)";
+		jdbcTemplate.update(sql, new PreparedStatementSetter() {			
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setString(1, "test2");
+				ps.setInt(2, 20);
+			}
+		});
+	}
+	
+
 }
