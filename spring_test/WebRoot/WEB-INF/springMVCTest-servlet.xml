@@ -19,6 +19,7 @@
     
     <!-- 扫描 com.cybbj.springmvc包下的所有类，让标注spring注解的类生效-->
     <context:component-scan base-package="com.cybbj.springmvc"></context:component-scan>
+    <context:component-scan base-package="com.cybbj.converter"></context:component-scan>
 	<!-- 定义视图名称解析器  将为 /WEB-INF/jsp/springmvctest/<view>.jsp的视图对象-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/jsp/springmvctest/"
